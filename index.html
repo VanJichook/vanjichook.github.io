@@ -26,6 +26,56 @@
   <p class="intro">From Ji Chook, I am on my way back to the beginning.</p>
   <p>그림, 음악, 언어, 파편의 축.</p>
   <p>New isolationism</p>
+
+<!-- ✅ 1. 입력창 -->
+<div style="text-align: center; margin: 4em auto;">
+  <input type="text" id="userInput" placeholder="단어를 당신의 적어보세요"
+         oninput="updateWords()"
+         style="padding: 0.5em 1em; font-size: 1em; width: 250px; border: 1px solid #ccc;" />
+</div>
+
+<!-- ✅ 2. 반응하는 문장들 -->
+<p style="text-align: center; font-size: 1.2em; color: #444;">
+  나는 <span class="echo">…</span> 속에서 나를 만난다.
+</p>
+
+<p style="text-align: center; font-style: italic; color: #666;">
+  그 <span class="echo">…</span>, 아직 끝나지 않은 꿈.
+</p>
+
+<p style="text-align: center; margin-top: 4em; font-variant: small-caps; color: #999;">
+  그림, 음악, <span class="echo">…</span>, 파편의 축.
+</p>
+
+<p style="text-align: center; margin-top: 4em; font-variant: small-caps; color: #333;">
+  <span class="echo">…</span>.
+</p>  
+
+<!-- ✅ 3. 애니메이션 + JS -->
+<style>
+  .echo {
+    transition: opacity 0.5s ease;
+  }
+  .fading {
+    opacity: 0;
+  }
+</style>
+
+<script>
+  function updateWords() {
+    const value = document.getElementById("userInput").value || "…";
+    const spans = document.querySelectorAll(".echo");
+
+    spans.forEach(span => {
+      span.classList.add("fading");
+
+      setTimeout(() => {
+        span.textContent = value;
+        span.classList.remove("fading");
+      }, 250); // 페이드 아웃 후 교체
+    });
+  }
+</script>
   
 <figure style="text-align: center; margin: 4em auto;">
   <img src="assets/memory_250329.png"
