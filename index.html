@@ -35,11 +35,24 @@
       display: none;
       opacity: 0;
       transition: opacity 0.5s ease;
+      pointer-events: none; /* 오버레이는 클릭 막지 않음 */
+    }
+    #muteOverlayText {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #ffffff;
+      font-size: 1.1em;
+      font-style: italic;
+      z-index: 1000;
+      pointer-events: none;
     }
   </style>
 </head>
 <body>
   <div id="darkOverlay"></div>
+  <div id="muteOverlayText">당신이 어디로부터 왔는지 잊지 마세요.</div>
   
   <h1>🌍 Van Ji Chook</h1>
   <p class="intro">From Ji Chook, I am on my way back to the beginning.</p>
@@ -48,7 +61,7 @@
 
 <!-- ✅ 1. 입력창 -->
 <div style="text-align: center; margin: 4em auto;">
-  <input type="text" id="userInput" placeholder="단어를 당신의 적어보세요"
+  <input type="text" id="userInput" placeholder="..."
          oninput="updateWords()"
          style="padding: 0.5em 1em; font-size: 1em; width: 250px; border: 1px solid #ccc;" />
 </div>
@@ -228,14 +241,17 @@
     function toggleMute() {
       audio.muted = !audio.muted;
       const overlay = document.getElementById("darkOverlay");
+      const overlayText = document.getElementById("muteOverlayText");
       const btn = document.getElementById("muteBtn");
-
-      if (audio.muted) {
+      
+       if (audio.muted) {
         overlay.style.display = "block";
         overlay.style.opacity = "1";
+        overlayText.style.display = "block";
         btn.textContent = "🔈 unmute";
       } else {
         overlay.style.opacity = "0";
+        overlayText.style.display = "none";
         setTimeout(() => {
           overlay.style.display = "none";
         }, 500);
