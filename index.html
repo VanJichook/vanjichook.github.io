@@ -357,6 +357,10 @@
   <!-- 숨겨진 플레이어 -->
   <audio id="audio" style="display: none;"></audio>
 
+  <p id="nowPlaying" style="text-align: center; margin-top: 2em; font-style: italic; color: #555;">
+  🎵 Now Playing: ...
+</p>
+  
   <div style="text-align: center; margin: 3em auto;">
     <button onclick="togglePlay()" style="margin: 0 0.5em;">⏯️ play / pause</button>
     <button onclick="nextTrack()" style="margin: 0 0.5em;">⏭️ next</button>
@@ -375,8 +379,14 @@
     const audio = document.getElementById("audio");
 
     function playTrack(index) {
-      audio.src = playlist[index];
-      audio.play();
+  audio.src = playlist[index];
+  audio.play();
+
+  // 🎶 현재 재생 중인 트랙 이름 추출
+  const filePath = playlist[index];
+  const fileName = filePath.split('/').pop().replace('_mastering.mp3', '').replace('.mp3', '');
+  const nowPlaying = document.getElementById("nowPlaying");
+  nowPlaying.textContent = `🎵 Now Playing: ${fileName}`;
     }
 
     function togglePlay() {
