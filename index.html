@@ -19,9 +19,28 @@
     .intro {
       font-size: 1.2em;
     }
+    .echo {
+      transition: opacity 0.5s ease;
+    }
+    .fading {
+      opacity: 0;
+    }
+    #darkOverlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(2px);
+      z-index: 999;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
   </style>
 </head>
 <body>
+  <div id="darkOverlay"></div>
+  
   <h1>🌍 Van Ji Chook</h1>
   <p class="intro">From Ji Chook, I am on my way back to the beginning.</p>
   <p>그림, 음악, 언어, 파편의 축.</p>
@@ -40,7 +59,7 @@
 </p>
 
 <p style="text-align: center; font-style: italic; color: #666;">
-  그 <span class="echo">…</span>, 아직 끝나지 않은 꿈.
+  <span class="echo">…</span>, 아직 끝나지 않은 꿈.
 </p>
 
 <p style="text-align: center; margin-top: 4em; font-variant: small-caps; color: #999;">
@@ -160,64 +179,92 @@
 <!-- 📩 이메일 섹션 끝 --> 
   
   <!-- 숨겨진 플레이어 -->
-<audio id="audio" style="display: none;"></audio>
+  <audio id="audio" style="display: none;"></audio>
 
-<!-- 미니멀 컨트롤 UI -->
-<div style="text-align: center; margin: 3em auto;">
-  <button onclick="togglePlay()" style="margin: 0 0.5em;">⏯️ play / pause</button>
-  <button onclick="nextTrack()" style="margin: 0 0.5em;">⏭️ next</button>
-  <button onclick="shufflePlaylist()" style="margin: 0 0.5em;">🔀 shuffle</button>
-  <button onclick="toggleMute()">🔇 mute / unmute</button>
-</div>
+  <div style="text-align: center; margin: 3em auto;">
+    <button onclick="togglePlay()" style="margin: 0 0.5em;">⏯️ play / pause</button>
+    <button onclick="nextTrack()" style="margin: 0 0.5em;">⏭️ next</button>
+    <button onclick="shufflePlaylist()" style="margin: 0 0.5em;">🔀 shuffle</button>
+    <button id="muteBtn" onclick="toggleMute()" style="margin: 0 0.5em;">🔇 mute</button>
+  </div>
 
-<script>
-  const playlist = [
-    "assets/Takla_mastering.mp3",
-    "assets/Visit_mastering.mp3",
-    "assets/After You Left.mp3"
-  ];
+  <script>
+    const playlist = [
+      "assets/Takla_mastering.mp3",
+      "assets/Visit_mastering.mp3",
+      "assets/After You Left.mp3"
+    ];
 
-  let currentTrack = 0;
-  const audio = document.getElementById("audio");
+    let currentTrack = 0;
+    const audio = document.getElementById("audio");
 
-  function playTrack(index) {
-    audio.src = playlist[index];
-    audio.play();
-  }
-
-  function togglePlay() {
-    if (audio.paused) {
+    function playTrack(index) {
+      audio.src = playlist[index];
       audio.play();
-    } else {
-      audio.pause();
     }
-  }
 
-  function nextTrack() {
-    currentTrack = (currentTrack + 1) % playlist.length;
-    playTrack(currentTrack);
-  }
-
-  function shufflePlaylist() {
-    for (let i = playlist.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [playlist[i], playlist[j]] = [playlist[j], playlist[i]];
+    function togglePlay() {
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
     }
-    currentTrack = 0;
-    playTrack(currentTrack);
-  }
 
-  // 반복 재생
-  audio.addEventListener("ended", () => {
-    nextTrack();
-  });
+    function nextTrack() {
+      currentTrack = (currentTrack + 1) % playlist.length;
+      playTrack(currentTrack);
+    }
 
-  // 페이지 로드시 자동 재생 시도 (브라우저 정책으로 차단될 수도 있음)
-  window.addEventListener("load", () => {
-    playTrack(currentTrack);
-    audio.volume = 0.4; // 시작 볼륨 낮게
-  });
-</script>
+    function shufflePlaylist() {
+      for (let i = playlist.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [playlist[i], playlist[j]] = [playlist[j], playlist[i]];
+      }
+      currentTrack = 0;
+      playTrack(currentTrack);
+    }
+
+    function toggleMute() {
+      audio.muted = !audio.muted;
+      const overlay = document.getElementById("darkOverlay");
+      const btn = document.getElementById("muteBtn");
+
+      if (audio.muted) {
+        overlay.style.display = "block";
+        overlay.style.opacity = "1";
+        btn.textContent = "🔈 unmute";
+      } else {
+        overlay.style.opacity = "0";
+        setTimeout(() => {
+          overlay.style.display = "none";
+        }, 500);
+        btn.textContent = "🔇 mute";
+      }
+    }
+
+    audio.addEventListener("ended", () => {
+      nextTrack();
+    });
+
+    window.addEventListener("load", () => {
+      playTrack(currentTrack);
+      audio.volume = 0.4;
+    });
+
+    function updateWords() {
+      const value = document.getElementById("userInput").value || "…";
+      const spans = document.querySelectorAll(".echo");
+
+      spans.forEach(span => {
+        span.classList.add("fading");
+        setTimeout(() => {
+          span.textContent = value;
+          span.classList.remove("fading");
+        }, 250);
+      });
+    }
+  </script>
 </body>
   
 </body>
