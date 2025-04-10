@@ -97,7 +97,65 @@
     놀이 (Play), 2025
   </figcaption>
 </figure>
-  
+
+  <!-- 숨겨진 플레이어 -->
+<audio id="audio" style="display: none;"></audio>
+
+<!-- 미니멀 컨트롤 UI -->
+<div style="text-align: center; margin: 3em auto;">
+  <button onclick="togglePlay()" style="margin: 0 0.5em;">⏯️ play / pause</button>
+  <button onclick="nextTrack()" style="margin: 0 0.5em;">⏭️ next</button>
+  <button onclick="shufflePlaylist()" style="margin: 0 0.5em;">🔀 shuffle</button>
+</div>
+
+<script>
+  const playlist = [
+    "assets/Takla_mastering.mp3",
+    "assets/Visit_mastering.mp3",
+    "assets/After You Left.mp3"
+  ];
+
+  let currentTrack = 0;
+  const audio = document.getElementById("audio");
+
+  function playTrack(index) {
+    audio.src = playlist[index];
+    audio.play();
+  }
+
+  function togglePlay() {
+    if (audio.paused) {
+      audio.play();
+    } else {
+      audio.pause();
+    }
+  }
+
+  function nextTrack() {
+    currentTrack = (currentTrack + 1) % playlist.length;
+    playTrack(currentTrack);
+  }
+
+  function shufflePlaylist() {
+    for (let i = playlist.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [playlist[i], playlist[j]] = [playlist[j], playlist[i]];
+    }
+    currentTrack = 0;
+    playTrack(currentTrack);
+  }
+
+  // 반복 재생
+  audio.addEventListener("ended", () => {
+    nextTrack();
+  });
+
+  // 페이지 로드시 자동 재생 시도 (브라우저 정책으로 차단될 수도 있음)
+  window.addEventListener("load", () => {
+    playTrack(currentTrack);
+    audio.volume = 0.4; // 시작 볼륨 낮게
+  });
+</script>
 </body>
   
 </body>
