@@ -342,8 +342,123 @@
   <figcaption style="margin-top: 1em; font-size: 0.9em; color: #333; font-variant: small-caps; letter-spacing: 1px;">
     사유 (Thinking), 2025
   </figcaption>
-</figure>  
+</figure>
   
+  <!-- 🎧 Music Project Inquiry (애니메이션 토글 버전) -->
+<style>
+  .inquiry-wrapper {
+    margin: 6em auto;
+    max-width: 800px;
+    background: #f8f8f8;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 1.5em 2em;
+    font-size: 0.95em;
+    color: #333;
+    overflow: hidden;
+    transition: max-height 0.6s ease, opacity 0.5s ease;
+    max-height: 3.2em; /* summary 한 줄만 보이게 */
+    opacity: 0.95;
+  }
+  .inquiry-wrapper.open {
+    max-height: 1200px; /* 내용 길이에 맞춰 넉넉히 */
+    opacity: 1;
+  }
+  .inquiry-summary {
+    font-size: 1.2em;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    user-select: none;
+  }
+  .inquiry-summary::after {
+    content: "＋";
+    position: absolute;
+    right: 0;
+    transition: transform 0.3s ease;
+  }
+  .inquiry-wrapper.open .inquiry-summary::after {
+    content: "－";
+  }
+  .service-section {
+    margin-top: 1.5em;
+    line-height: 1.7;
+  }
+  .service-section h3 {
+    margin: 1.2em 0 0.4em;
+    font-size: 1.05em;
+    color: #111;
+  }
+  .service-section p {
+    margin: 0.2em 0;
+    color: #444;
+  }
+  .contact-line {
+    text-align: center;
+    margin-top: 1em;
+    font-weight: 500;
+  }
+</style>
+
+<div class="inquiry-wrapper" id="inquiryBox">
+  <div class="inquiry-summary" onclick="toggleInquiry()">🎧 Music Project Inquiry</div>
+
+  <div class="inquiry-content">
+    <div class="contact-line">
+      📞 010-7567-7020 / ✉️ <a href="mailto:vanjichook@gmail.com">vanjichook@gmail.com</a>
+    </div>
+
+    <div class="service-section">
+      <h3>1. 음악·사운드 제작</h3>
+      <p>작곡 · 편곡 · 사운드디자인 · 녹음기획 · 프로듀싱</p>
+      <p>밴드/싱어송라이터 곡 제작 (신스록·드림팝·포스트록·인디팝)</p>
+      <p>광고·영화·전시 BGM / OST</p>
+      <p>무용음악, 게임음악, 칩튠</p>
+      <p>보컬 디렉팅 / 믹스 컨설팅</p>
+      <p>사운드 브랜딩, 밴드 프로듀싱</p>
+    </div>
+
+    <div class="service-section">
+      <h3>2. 기획·브랜딩·에디토리얼</h3>
+      <p>브랜딩 전략 · 콘셉트 기획 · 아트 디렉션</p>
+      <p>아티스트/밴드 브랜딩 전략서, EPK 제작</p>
+      <p>앨범 콘셉트, 아트워크, 카피라이팅</p>
+      <p>전시·프로젝트 스토리라인 설계</p>
+      <p>로컬·인디씬 브랜드 컨설팅</p>
+    </div>
+
+    <div class="service-section">
+      <h3>3. 디지털 시스템·자동화</h3>
+      <p>Python(FastAPI) · Notion · Google Calendar · Slack</p>
+      <p>Notion ↔ Google Calendar Sync 서버 구축</p>
+      <p>팀 자동화(업무·리마인드·메모)</p>
+      <p>Slack 커맨드/웹훅 기반 협업툴</p>
+      <p>로컬→클라우드 이전 세팅</p>
+    </div>
+
+    <div class="service-section">
+      <h3>4. 콘텐츠·영상·MV 기획</h3>
+      <p>뮤직비디오·공연 다큐 기획/시나리오</p>
+      <p>촬영 콘티 및 현장 연출</p>
+      <p>MV 크레딧/에디토리얼 패키징 (한·영 버전)</p>
+    </div>
+
+    <div class="service-section">
+      <h3>5. 해외 PR & 커뮤니케이션</h3>
+      <p>EPK·보도자료 영문 작성</p>
+      <p>해외 PR사 커뮤니케이션 대행</p>
+      <p>글로벌 홍보 전략 컨설팅</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleInquiry() {
+    const box = document.getElementById("inquiryBox");
+    box.classList.toggle("open");
+  }
+</script>
+
  <!-- 📩 이메일 섹션 시작 -->
 <div style="text-align: center; margin: 6em auto; font-size: 0.9em; color: #333; font-style: italic;">
   그림, 음악, 언어, 파편의 축.
@@ -487,7 +602,5 @@ document.addEventListener("contextmenu", function (e) {
       });
     }
   </script>
-</body>
-  
 </body>
 </html>
