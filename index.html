@@ -12,6 +12,7 @@
       margin: 40px;
       line-height: 1.6;
       transition: background 0.5s ease;
+      overflow-x: hidden;
     }
 
     /* 상단 네비게이션 */
@@ -104,21 +105,31 @@
 
   <!-- 🌍 메인 -->
   <section id="main" class="active">
-    <h1>🌍 Van Ji Chook</h1>
-    <p>From Ji Chook, I am on my way back to the beginning.</p>
+    <h1 style="font-size:3em; margin-bottom:0.3em;">🌍 Van Ji Chook</h1>
+    <p style="font-size:1.3em; color:#444; margin-bottom:2em;">
+      From Ji Chook, I am on my way back to the beginning.
+    </p>
 
-    <div style="text-align:center; margin:3em auto;">
+    <div style="text-align:center; margin:4em auto;">
       <input id="userInput" placeholder="..." 
         oninput="updateWords()" 
-        style="padding:0.5em 1em; font-size:1em; width:250px; border:1px solid #ccc; text-align:center;">
+        style="padding:0.7em 1.2em; font-size:1.1em; width:280px; border:1px solid #ccc; text-align:center; border-radius:6px;">
     </div>
 
-    <p style="text-align:center;">나는 <span class="echo">…</span> 에서 나를 만난다.</p>
-    <p style="text-align:center;font-style:italic;"><span class="echo">…</span>, 아직 끝나지 않은 꿈.</p>
-    <p style="text-align:center;font-variant:small-caps;color:#666;">그림, 음악, <span class="echo">…</span>, 파편의 축.</p>
+    <p style="text-align:center; font-size:1.5em; margin:1em 0;">
+      나는 <span class="echo">…</span> 에서 나를 만난다.
+    </p>
+
+    <p style="text-align:center; font-size:1.3em; font-style:italic; margin:0.6em 0; color:#444;">
+      <span class="echo">…</span>, 아직 끝나지 않은 꿈.
+    </p>
+
+    <p style="text-align:center; font-variant:small-caps; color:#666; font-size:1.2em; margin-top:2.5em;">
+      그림, 음악, <span class="echo">…</span>, 파편의 축.
+    </p>
   </section>
 
-  <!-- 🎧 연결 (외주 문의) -->
+  <!-- 🎧 연결 -->
   <section id="connect">
     <div style="max-width:800px;margin:4em auto;padding:2em;border:1px solid #ddd;border-radius:8px;background:#f8f8f8;">
       <h2>🎧 Music Project Inquiry</h2>
@@ -137,40 +148,41 @@
     </div>
   </section>
 
-  <!-- 🖼 기록 (갤러리: 모든 그림 포함) -->
+  <!-- 🖼 기록 -->
   <section id="archive">
     <h2 style="text-align:center;">기록</h2>
     <div class="gallery">
-      <figure><img src="assets/memory_250329.png" alt="기억"><figcaption>기억 (Memory), 2025</figcaption></figure>
-      <figure><img src="assets/camille_250329.png" alt="까미"><figcaption>까미 (Camille), 2025</figcaption></figure>
-      <figure><img src="assets/eyes_250223.png" alt="눈"><figcaption>눈 (Eyes), 2025</figcaption></figure>
-      <figure><img src="assets/dream_250223.png" alt="꿈"><figcaption>꿈 (Dream), 2025</figcaption></figure>
-      <figure><img src="assets/name_250217.png" alt="石"><figcaption>石 (Name), 2025</figcaption></figure>
-      <figure><img src="assets/egao_250223.PNG" alt="미소"><figcaption>미소 (Egao), 2025</figcaption></figure>
-      <figure><img src="assets/obscure_250223.PNG" alt="무명"><figcaption>무명 (Obscure), 2025</figcaption></figure>
-      <figure><img src="assets/play_250301.PNG" alt="놀이"><figcaption>놀이 (Play), 2025</figcaption></figure>
-      <figure><img src="assets/Jisatsu_250223.PNG" alt="지사츠"><figcaption>지사츠 (Jisatsu), 2025</figcaption></figure>
-      <figure><img src="assets/diary_250329.PNG" alt="일기"><figcaption>일기 (Diary), 2025</figcaption></figure>
-      <figure><img src="assets/exam_250208.PNG" alt="중간고사"><figcaption>중간고사 (Exam), 2025</figcaption></figure>
-      <figure><img src="assets/home_250301.PNG" alt="집"><figcaption>집 (Home), 2025</figcaption></figure>
-      <figure><img src="assets/life_250329.PNG" alt="삶"><figcaption>삶 (Life), 2025</figcaption></figure>
-      <figure><img src="assets/mountain_250329.PNG" alt="태산"><figcaption>태산 (Mountain), 2025</figcaption></figure>
-      <figure><img src="assets/music_250208.PNG" alt="합주실"><figcaption>합주실 (Practice Room), 2025</figcaption></figure>
-      <figure><img src="assets/music_250329.PNG" alt="음악"><figcaption>음악 (Music), 2025</figcaption></figure>
-      <figure><img src="assets/proto_250223.PNG" alt="태초"><figcaption>태초 (Proto), 2025</figcaption></figure>
-      <figure><img src="assets/rest_250217.PNG" alt="휴식"><figcaption>휴식 (Rest), 2025</figcaption></figure>
-      <figure><img src="assets/rest_250301.PNG" alt="휴식"><figcaption>휴식 (Rest), 2025</figcaption></figure>
-      <figure><img src="assets/rests_250329.PNG" alt="휴식"><figcaption>휴식 (Rests), 2025</figcaption></figure>
-      <figure><img src="assets/rests2_250329.PNG" alt="휴식"><figcaption>휴식 (Rests2), 2025</figcaption></figure>
-      <figure><img src="assets/rhythm_250301.PNG" alt="율동"><figcaption>율동 (Rhythm), 2025</figcaption></figure>
-      <figure><img src="assets/self-portrait_250329.PNG" alt="자화상"><figcaption>자화상 (Self-portrait), 2025</figcaption></figure>
-      <figure><img src="assets/spawning_250329.PNG" alt="산란"><figcaption>산란 (Spawning), 2025</figcaption></figure>
-      <figure><img src="assets/swim_250301.PNG" alt="유영"><figcaption>유영 (Swim), 2025</figcaption></figure>
-      <figure><img src="assets/thinking_250223.PNG" alt="사유"><figcaption>사유 (Thinking), 2025</figcaption></figure>
+      <!-- 전체 그림 포함 -->
+      <figure><img src="assets/memory_250329.png"><figcaption>기억 (Memory), 2025</figcaption></figure>
+      <figure><img src="assets/camille_250329.png"><figcaption>까미 (Camille), 2025</figcaption></figure>
+      <figure><img src="assets/eyes_250223.png"><figcaption>눈 (Eyes), 2025</figcaption></figure>
+      <figure><img src="assets/dream_250223.png"><figcaption>꿈 (Dream), 2025</figcaption></figure>
+      <figure><img src="assets/name_250217.png"><figcaption>石 (Name), 2025</figcaption></figure>
+      <figure><img src="assets/egao_250223.PNG"><figcaption>미소 (Egao), 2025</figcaption></figure>
+      <figure><img src="assets/obscure_250223.PNG"><figcaption>무명 (Obscure), 2025</figcaption></figure>
+      <figure><img src="assets/play_250301.PNG"><figcaption>놀이 (Play), 2025</figcaption></figure>
+      <figure><img src="assets/Jisatsu_250223.PNG"><figcaption>지사츠 (Jisatsu), 2025</figcaption></figure>
+      <figure><img src="assets/diary_250329.PNG"><figcaption>일기 (Diary), 2025</figcaption></figure>
+      <figure><img src="assets/exam_250208.PNG"><figcaption>중간고사 (Exam), 2025</figcaption></figure>
+      <figure><img src="assets/home_250301.PNG"><figcaption>집 (Home), 2025</figcaption></figure>
+      <figure><img src="assets/life_250329.PNG"><figcaption>삶 (Life), 2025</figcaption></figure>
+      <figure><img src="assets/mountain_250329.PNG"><figcaption>태산 (Mountain), 2025</figcaption></figure>
+      <figure><img src="assets/music_250208.PNG"><figcaption>합주실 (Practice Room), 2025</figcaption></figure>
+      <figure><img src="assets/music_250329.PNG"><figcaption>음악 (Music), 2025</figcaption></figure>
+      <figure><img src="assets/proto_250223.PNG"><figcaption>태초 (Proto), 2025</figcaption></figure>
+      <figure><img src="assets/rest_250217.PNG"><figcaption>휴식 (Rest), 2025</figcaption></figure>
+      <figure><img src="assets/rest_250301.PNG"><figcaption>휴식 (Rest), 2025</figcaption></figure>
+      <figure><img src="assets/rests_250329.PNG"><figcaption>휴식 (Rests), 2025</figcaption></figure>
+      <figure><img src="assets/rests2_250329.PNG"><figcaption>휴식 (Rests2), 2025</figcaption></figure>
+      <figure><img src="assets/rhythm_250301.PNG"><figcaption>율동 (Rhythm), 2025</figcaption></figure>
+      <figure><img src="assets/self-portrait_250329.PNG"><figcaption>자화상 (Self-portrait), 2025</figcaption></figure>
+      <figure><img src="assets/spawning_250329.PNG"><figcaption>산란 (Spawning), 2025</figcaption></figure>
+      <figure><img src="assets/swim_250301.PNG"><figcaption>유영 (Swim), 2025</figcaption></figure>
+      <figure><img src="assets/thinking_250223.PNG"><figcaption>사유 (Thinking), 2025</figcaption></figure>
     </div>
   </section>
 
-  <!-- 🎵 음악 플레이어 (고정) -->
+  <!-- 🎵 음악 플레이어 -->
   <div id="playerBar">
     <audio id="audio"></audio>
     <p id="nowPlaying" style="display:inline; margin-right:1em;">🎵 Now Playing: ...</p>
@@ -189,7 +201,7 @@
       event.target.classList.add("active");
     }
 
-    // ✏️ 단어 인터랙션
+    // ✏️ 단어 입력 반응 + 흩어짐 효과
     function updateWords() {
       const value = document.getElementById("userInput").value || "…";
       document.querySelectorAll(".echo").forEach(span => {
@@ -199,6 +211,39 @@
           span.style.opacity = 1;
         }, 250);
       });
+
+      if (value && value !== "…") spawnFloatingWords(value);
+    }
+
+    // 🌠 단어 흩어짐 효과
+    function spawnFloatingWords(text) {
+      const count = Math.floor(Math.random() * 4) + 3;
+      for (let i = 0; i < count; i++) {
+        const span = document.createElement("span");
+        span.textContent = text;
+        span.style.position = "fixed";
+        span.style.left = Math.random() * 90 + "%";
+        span.style.top = Math.random() * 90 + "%";
+        span.style.color = `rgba(0,0,0,${0.3 + Math.random() * 0.7})`;
+        span.style.fontSize = `${1 + Math.random() * 2}em`;
+        span.style.pointerEvents = "none";
+        span.style.zIndex = 500;
+        span.style.opacity = 0;
+        span.style.transition = "opacity 2s ease, transform 6s ease";
+        document.body.appendChild(span);
+
+        requestAnimationFrame(() => {
+          span.style.opacity = 1;
+          const moveX = (Math.random() - 0.5) * 200;
+          const moveY = (Math.random() - 0.5) * 200;
+          span.style.transform = `translate(${moveX}px, ${moveY}px) scale(${0.8 + Math.random() * 0.4})`;
+        });
+
+        setTimeout(() => {
+          span.style.opacity = 0;
+          setTimeout(() => span.remove(), 2000);
+        }, 5000 + Math.random() * 3000);
+      }
     }
 
     // 🎧 플레이어
