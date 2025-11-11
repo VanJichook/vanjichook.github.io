@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Van Ji Chook</title>
+  <style>
+    body {
+      background: #fff;
+      color: #333;
+      font-family: 'Noto Sans KR', sans-serif;
+      margin: 40px;
+      line-height: 1.6;
+      transition: background 0.5s ease;
+    }
+
+    nav {
+      text-align: center;
+      margin-bottom: 2em;
+      letter-spacing: 1px;
+    }
+    nav button {
+      background: none;
+      border: none;
+      font-size: 1em;
+      margin: 0 1em;
+      cursor: pointer;
+      color: #555;
+      transition: color 0.3s ease;
+    }
+    nav button:hover, nav button.active {
+      color: #000;
+      font-weight: 600;
+    }
+
+    section {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+    section.active {
+      display: block;
+      opacity: 1;
+    }
+
+    /* 갤러리 레이아웃 */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5em;
+      margin: 4em 0;
+    }
+    .gallery figure {
+      text-align: center;
+      margin: 0;
+    }
+    .gallery img {
+      width: 100%;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.4s ease;
+    }
+    .gallery img:hover {
+      transform: scale(1.03);
+    }
+    .gallery figcaption {
+      margin-top: 0.5em;
+      font-size: 0.9em;
+      color: #555;
+      font-variant: small-caps;
+    }
+  </style>
+</head>
+<body>
+  <!-- 🌐 네비게이션 -->
+  <nav>
+    <button class="active" onclick="showSection('main')">메인</button>
+    <button onclick="showSection('connect')">(연결)</button>
+    <button onclick="showSection('archive')">(기록)</button>
+  </nav>
+
+  <!-- 🪞 메인 화면 -->
+  <section id="main" class="active">
+    <h1>🌍 Van Ji Chook</h1>
+    <p>From Ji Chook, I am on my way back to the beginning.</p>
+
+    <div style="text-align:center; margin:3em auto;">
+      <input id="userInput" placeholder="..." 
+        oninput="updateWords()" 
+        style="padding:0.5em 1em; font-size:1em; width:250px; border:1px solid #ccc; text-align:center;">
+    </div>
+
+    <p style="text-align:center;">나는 <span class="echo">…</span> 에서 나를 만난다.</p>
+    <p style="text-align:center;font-style:italic;"><span class="echo">…</span>, 아직 끝나지 않은 꿈.</p>
+    <p style="text-align:center;font-variant:small-caps;color:#666;">그림, 음악, <span class="echo">…</span>, 파편의 축.</p>
+  </section>
+
+  <!-- 🎧 연결 (외주 문의) -->
+  <section id="connect">
+    <div class="inquiry-wrapper open">
+      <div class="inquiry-summary">🎧 Music Project Inquiry</div>
+      <div class="contact-line" style="text-align:center;">
+        📞 010-7567-7020 / ✉️ <a href="mailto:vanjichook@gmail.com">vanjichook@gmail.com</a>
+      </div>
+
+      <div class="service-section">
+        <h3>1. 음악·사운드 제작</h3>
+        <p>작곡 · 편곡 · 사운드디자인 · 녹음기획 · 프로듀싱</p>
+        <p>밴드/싱어송라이터 곡 제작 (신스록·드림팝·포스트록·인디팝)</p>
+        <p>광고·영화·전시 BGM / OST</p>
+        <p>무용음악, 게임음악, 칩튠</p>
+        <p>보컬 디렉팅 / 믹스 컨설팅</p>
+        <p>사운드 브랜딩, 밴드 프로듀싱</p>
+      </div>
+
+      <div class="service-section">
+        <h3>2. 기획·브랜딩·에디토리얼</h3>
+        <p>브랜딩 전략 · 콘셉트 기획 · 아트 디렉션</p>
+        <p>아티스트/밴드 브랜딩 전략서, EPK 제작</p>
+        <p>앨범 콘셉트, 아트워크, 카피라이팅</p>
+        <p>전시·프로젝트 스토리라인 설계</p>
+        <p>로컬·인디씬 브랜드 컨설팅</p>
+      </div>
+
+      <div class="service-section">
+        <h3>3. 디지털 시스템·자동화</h3>
+        <p>Python(FastAPI) · Notion · Google Calendar · Slack</p>
+        <p>Notion ↔ Google Calendar Sync 서버 구축</p>
+        <p>팀 자동화(업무·리마인드·메모)</p>
+        <p>Slack 커맨드/웹훅 기반 협업툴</p>
+        <p>로컬→클라우드 이전 세팅</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🖼 기록 (갤러리) -->
+  <section id="archive">
+    <h2 style="text-align:center;">기록</h2>
+    <div class="gallery">
+      <figure>
+        <img src="assets/memory_250329.png" alt="기억">
+        <figcaption>기억 (Memory), 2025</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/camille_250329.png" alt="까미">
+        <figcaption>까미 (Camille), 2025</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/eyes_250223.png" alt="눈">
+        <figcaption>눈 (Eyes), 2025</figcaption>
+      </figure>
+      <!-- ... 필요 그림 계속 추가 가능 -->
+    </div>
+  </section>
+
+  <script>
+    // 🌐 섹션 전환
+    function showSection(id) {
+      document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+      document.querySelectorAll("nav button").forEach(btn => btn.classList.remove("active"));
+      event.target.classList.add("active");
+    }
+
+    // ✏️ 입력 반응
+    function updateWords() {
+      const value = document.getElementById("userInput").value || "…";
+      document.querySelectorAll(".echo").forEach(span => {
+        span.style.opacity = 0;
+        setTimeout(() => {
+          span.textContent = value;
+          span.style.opacity = 1;
+        }, 250);
+      });
+    }
+  </script>
+</body>
+</html>
