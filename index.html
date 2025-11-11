@@ -14,6 +14,7 @@
       transition: background 0.5s ease;
     }
 
+    /* 상단 네비게이션 */
     nav {
       text-align: center;
       margin-bottom: 2em;
@@ -33,6 +34,7 @@
       font-weight: 600;
     }
 
+    /* 섹션 전환 */
     section {
       display: none;
       opacity: 0;
@@ -43,7 +45,7 @@
       opacity: 1;
     }
 
-    /* 갤러리 레이아웃 */
+    /* 갤러리 스타일 */
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -51,13 +53,13 @@
       margin: 4em 0;
     }
     .gallery figure {
-      text-align: center;
       margin: 0;
+      text-align: center;
     }
     .gallery img {
       width: 100%;
       border-radius: 6px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
       transition: transform 0.4s ease;
     }
     .gallery img:hover {
@@ -69,17 +71,38 @@
       color: #555;
       font-variant: small-caps;
     }
+
+    /* 고정 음악 플레이어 */
+    #playerBar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      padding: 0.6em 0;
+      z-index: 1000;
+    }
+    #playerBar button {
+      margin: 0 0.4em;
+      background: none;
+      border: none;
+      font-size: 1em;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-  <!-- 🌐 네비게이션 -->
+
+  <!-- 🔹 네비게이션 -->
   <nav>
     <button class="active" onclick="showSection('main')">메인</button>
     <button onclick="showSection('connect')">(연결)</button>
     <button onclick="showSection('archive')">(기록)</button>
   </nav>
 
-  <!-- 🪞 메인 화면 -->
+  <!-- 🌍 메인 -->
   <section id="main" class="active">
     <h1>🌍 Van Ji Chook</h1>
     <p>From Ji Chook, I am on my way back to the beginning.</p>
@@ -97,61 +120,65 @@
 
   <!-- 🎧 연결 (외주 문의) -->
   <section id="connect">
-    <div class="inquiry-wrapper open">
-      <div class="inquiry-summary">🎧 Music Project Inquiry</div>
-      <div class="contact-line" style="text-align:center;">
-        📞 010-7567-7020 / ✉️ <a href="mailto:vanjichook@gmail.com">vanjichook@gmail.com</a>
-      </div>
-
-      <div class="service-section">
-        <h3>1. 음악·사운드 제작</h3>
-        <p>작곡 · 편곡 · 사운드디자인 · 녹음기획 · 프로듀싱</p>
-        <p>밴드/싱어송라이터 곡 제작 (신스록·드림팝·포스트록·인디팝)</p>
-        <p>광고·영화·전시 BGM / OST</p>
-        <p>무용음악, 게임음악, 칩튠</p>
-        <p>보컬 디렉팅 / 믹스 컨설팅</p>
-        <p>사운드 브랜딩, 밴드 프로듀싱</p>
-      </div>
-
-      <div class="service-section">
-        <h3>2. 기획·브랜딩·에디토리얼</h3>
-        <p>브랜딩 전략 · 콘셉트 기획 · 아트 디렉션</p>
-        <p>아티스트/밴드 브랜딩 전략서, EPK 제작</p>
-        <p>앨범 콘셉트, 아트워크, 카피라이팅</p>
-        <p>전시·프로젝트 스토리라인 설계</p>
-        <p>로컬·인디씬 브랜드 컨설팅</p>
-      </div>
-
-      <div class="service-section">
-        <h3>3. 디지털 시스템·자동화</h3>
-        <p>Python(FastAPI) · Notion · Google Calendar · Slack</p>
-        <p>Notion ↔ Google Calendar Sync 서버 구축</p>
-        <p>팀 자동화(업무·리마인드·메모)</p>
-        <p>Slack 커맨드/웹훅 기반 협업툴</p>
-        <p>로컬→클라우드 이전 세팅</p>
-      </div>
+    <div style="max-width:800px;margin:4em auto;padding:2em;border:1px solid #ddd;border-radius:8px;background:#f8f8f8;">
+      <h2>🎧 Music Project Inquiry</h2>
+      <p style="text-align:center;">📞 010-7567-7020 / ✉️ <a href="mailto:vanjichook@gmail.com">vanjichook@gmail.com</a></p>
+      <h3>1. 음악·사운드 제작</h3>
+      <p>작곡 · 편곡 · 사운드디자인 · 녹음기획 · 프로듀싱</p>
+      <p>밴드/싱어송라이터 곡 제작 (신스록·드림팝·포스트록·인디팝)</p>
+      <p>광고·영화·전시 BGM / OST / 무용음악 / 게임음악 / 칩튠</p>
+      <p>보컬 디렉팅 / 믹스 컨설팅 / 사운드 브랜딩 / 밴드 프로듀싱</p>
+      <h3>2. 기획·브랜딩·에디토리얼</h3>
+      <p>브랜딩 전략 · 콘셉트 기획 · 아트 디렉션</p>
+      <p>EPK 제작 / 앨범 콘셉트 / 아트워크 / 카피라이팅 / 전시 스토리라인</p>
+      <h3>3. 디지털 시스템·자동화</h3>
+      <p>Python(FastAPI) · Notion · Google Calendar · Slack</p>
+      <p>팀 자동화, 일정/메모 시스템, 로컬→클라우드 이전 세팅</p>
     </div>
   </section>
 
-  <!-- 🖼 기록 (갤러리) -->
+  <!-- 🖼 기록 (갤러리: 모든 그림 포함) -->
   <section id="archive">
     <h2 style="text-align:center;">기록</h2>
     <div class="gallery">
-      <figure>
-        <img src="assets/memory_250329.png" alt="기억">
-        <figcaption>기억 (Memory), 2025</figcaption>
-      </figure>
-      <figure>
-        <img src="assets/camille_250329.png" alt="까미">
-        <figcaption>까미 (Camille), 2025</figcaption>
-      </figure>
-      <figure>
-        <img src="assets/eyes_250223.png" alt="눈">
-        <figcaption>눈 (Eyes), 2025</figcaption>
-      </figure>
-      <!-- ... 필요 그림 계속 추가 가능 -->
+      <figure><img src="assets/memory_250329.png" alt="기억"><figcaption>기억 (Memory), 2025</figcaption></figure>
+      <figure><img src="assets/camille_250329.png" alt="까미"><figcaption>까미 (Camille), 2025</figcaption></figure>
+      <figure><img src="assets/eyes_250223.png" alt="눈"><figcaption>눈 (Eyes), 2025</figcaption></figure>
+      <figure><img src="assets/dream_250223.png" alt="꿈"><figcaption>꿈 (Dream), 2025</figcaption></figure>
+      <figure><img src="assets/name_250217.png" alt="石"><figcaption>石 (Name), 2025</figcaption></figure>
+      <figure><img src="assets/egao_250223.PNG" alt="미소"><figcaption>미소 (Egao), 2025</figcaption></figure>
+      <figure><img src="assets/obscure_250223.PNG" alt="무명"><figcaption>무명 (Obscure), 2025</figcaption></figure>
+      <figure><img src="assets/play_250301.PNG" alt="놀이"><figcaption>놀이 (Play), 2025</figcaption></figure>
+      <figure><img src="assets/Jisatsu_250223.PNG" alt="지사츠"><figcaption>지사츠 (Jisatsu), 2025</figcaption></figure>
+      <figure><img src="assets/diary_250329.PNG" alt="일기"><figcaption>일기 (Diary), 2025</figcaption></figure>
+      <figure><img src="assets/exam_250208.PNG" alt="중간고사"><figcaption>중간고사 (Exam), 2025</figcaption></figure>
+      <figure><img src="assets/home_250301.PNG" alt="집"><figcaption>집 (Home), 2025</figcaption></figure>
+      <figure><img src="assets/life_250329.PNG" alt="삶"><figcaption>삶 (Life), 2025</figcaption></figure>
+      <figure><img src="assets/mountain_250329.PNG" alt="태산"><figcaption>태산 (Mountain), 2025</figcaption></figure>
+      <figure><img src="assets/music_250208.PNG" alt="합주실"><figcaption>합주실 (Practice Room), 2025</figcaption></figure>
+      <figure><img src="assets/music_250329.PNG" alt="음악"><figcaption>음악 (Music), 2025</figcaption></figure>
+      <figure><img src="assets/proto_250223.PNG" alt="태초"><figcaption>태초 (Proto), 2025</figcaption></figure>
+      <figure><img src="assets/rest_250217.PNG" alt="휴식"><figcaption>휴식 (Rest), 2025</figcaption></figure>
+      <figure><img src="assets/rest_250301.PNG" alt="휴식"><figcaption>휴식 (Rest), 2025</figcaption></figure>
+      <figure><img src="assets/rests_250329.PNG" alt="휴식"><figcaption>휴식 (Rests), 2025</figcaption></figure>
+      <figure><img src="assets/rests2_250329.PNG" alt="휴식"><figcaption>휴식 (Rests2), 2025</figcaption></figure>
+      <figure><img src="assets/rhythm_250301.PNG" alt="율동"><figcaption>율동 (Rhythm), 2025</figcaption></figure>
+      <figure><img src="assets/self-portrait_250329.PNG" alt="자화상"><figcaption>자화상 (Self-portrait), 2025</figcaption></figure>
+      <figure><img src="assets/spawning_250329.PNG" alt="산란"><figcaption>산란 (Spawning), 2025</figcaption></figure>
+      <figure><img src="assets/swim_250301.PNG" alt="유영"><figcaption>유영 (Swim), 2025</figcaption></figure>
+      <figure><img src="assets/thinking_250223.PNG" alt="사유"><figcaption>사유 (Thinking), 2025</figcaption></figure>
     </div>
   </section>
+
+  <!-- 🎵 음악 플레이어 (고정) -->
+  <div id="playerBar">
+    <audio id="audio"></audio>
+    <p id="nowPlaying" style="display:inline; margin-right:1em;">🎵 Now Playing: ...</p>
+    <button onclick="togglePlay()">⏯️</button>
+    <button onclick="nextTrack()">⏭️</button>
+    <button onclick="shufflePlaylist()">🎲</button>
+    <button id="muteBtn" onclick="toggleMute()">🔇</button>
+  </div>
 
   <script>
     // 🌐 섹션 전환
@@ -162,7 +189,7 @@
       event.target.classList.add("active");
     }
 
-    // ✏️ 입력 반응
+    // ✏️ 단어 인터랙션
     function updateWords() {
       const value = document.getElementById("userInput").value || "…";
       document.querySelectorAll(".echo").forEach(span => {
@@ -173,6 +200,47 @@
         }, 250);
       });
     }
+
+    // 🎧 플레이어
+    const playlist = [
+      "assets/Takla_mastering.mp3",
+      "assets/Visit_mastering.mp3",
+      "assets/After You Left.mp3"
+    ];
+    let currentTrack = 0;
+    const audio = document.getElementById("audio");
+
+    function playTrack(index) {
+      audio.src = playlist[index];
+      audio.play();
+      const fileName = playlist[index].split('/').pop().replace('_mastering.mp3','').replace('.mp3','');
+      document.getElementById("nowPlaying").textContent = `🎵 Now Playing: ${fileName}`;
+    }
+    function togglePlay() {
+      audio.paused ? audio.play() : audio.pause();
+    }
+    function nextTrack() {
+      currentTrack = (currentTrack + 1) % playlist.length;
+      playTrack(currentTrack);
+    }
+    function shufflePlaylist() {
+      for (let i = playlist.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [playlist[i], playlist[j]] = [playlist[j], playlist[i]];
+      }
+      currentTrack = 0;
+      playTrack(currentTrack);
+    }
+    function toggleMute() {
+      audio.muted = !audio.muted;
+      document.getElementById("muteBtn").textContent = audio.muted ? "🔈" : "🔇";
+    }
+
+    audio.addEventListener("ended", () => nextTrack());
+    window.addEventListener("load", () => {
+      playTrack(currentTrack);
+      audio.volume = 0.4;
+    });
   </script>
 </body>
 </html>
