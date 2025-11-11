@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Van Ji Chook</title>
+
   <style>
     body {
       background: #fff;
@@ -11,11 +12,11 @@
       font-family: 'Noto Sans KR', sans-serif;
       margin: 40px;
       line-height: 1.6;
-      transition: background 0.5s ease;
+      transition: background 0.5s ease, color 0.5s ease;
       overflow-x: hidden;
     }
 
-    /* 상단 네비게이션 */
+    /* 네비게이션 */
     nav {
       text-align: center;
       margin-bottom: 2em;
@@ -46,16 +47,12 @@
       opacity: 1;
     }
 
-    /* 갤러리 스타일 */
+    /* 갤러리 */
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 1.5em;
       margin: 4em 0;
-    }
-    .gallery figure {
-      margin: 0;
-      text-align: center;
     }
     .gallery img {
       width: 100%;
@@ -73,11 +70,37 @@
       font-variant: small-caps;
     }
 
-    /* 고정 음악 플레이어 */
+    /* 일기 필터 버튼 */
+    .filter-btn {
+      border: 1px solid #555;
+      background: #fff;
+      color: #333;
+      padding: 0.5em 1.1em;
+      margin: 0.3em;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.95em;
+      transition: all 0.2s ease;
+    }
+    .filter-btn.active {
+      background: #111;
+      color: #fff;
+    }
+
+    /* 일기 페이드인 */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(15px);
+      animation: fadeInUp 0.8s ease forwards;
+    }
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 음악 플레이어 */
     #playerBar {
       position: fixed;
-      bottom: 0;
-      left: 0;
+      bottom: 0; left: 0;
       width: 100%;
       background: rgba(255,255,255,0.95);
       box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
@@ -94,68 +117,64 @@
     }
   </style>
 </head>
+
 <body>
 
-  <!-- 🔹 네비게이션 -->
+  <!-- 네비 -->
   <nav>
-    <button class="active" onclick="showSection('main')">집</button>
-    <button onclick="showSection('connect')">연결</button>
-    <button onclick="showSection('archive')">기억</button>
+    <button class="active" onclick="showSection('main', event)">집</button>
+    <button onclick="showSection('connect', event)">연결</button>
+    <button onclick="showSection('archive', event)">기억</button>
+    <button onclick="showSection('diary', event)">일기</button>
   </nav>
 
-  <!-- 🌍 메인 -->
-<section id="main" class="active">
-  <h1 style="font-size:3em; margin-bottom:0.3em;">🌍 Van Ji Chook</h1>
-  <p style="font-size:1.3em; color:#444; margin-bottom:2em; line-height:1.6;">
-    지축으로부터 온 자.<br>
-    끝 없는 순환 속에서 다시 시작으로 돌아가는 자.<br>
-    이데아로부터 찾아온, 방지축.<br><br>
-    <em>From Ji Chook, I am on my way back to the beginning.</em>
-  </p>
+  <!-- 메인 -->
+  <section id="main" class="active">
+    <h1 style="font-size:3em; margin-bottom:0.3em;">🌍 Van Ji Chook</h1>
+    <p style="font-size:1.3em; color:#444; margin-bottom:2em; line-height:1.6;">
+      지축으로부터 온 자.<br>
+      끝 없는 순환 속에서 다시 시작으로 돌아가는 자.<br>
+      이데아로부터 찾아온, 방지축.<br><br>
+      <em>From Ji Chook, I am on my way back to the beginning.</em>
+    </p>
 
     <div style="text-align:center; margin:4em auto;">
-      <input id="userInput" placeholder="..." 
-        oninput="updateWords()" 
-        style="padding:0.7em 1.2em; font-size:1.1em; width:280px; border:1px solid #ccc; text-align:center; border-radius:6px;">
+      <input id="userInput" placeholder="..." oninput="updateWords()"
+      style="padding:0.7em 1.2em; font-size:1.1em; width:280px; border:1px solid #ccc; text-align:center; border-radius:6px;">
     </div>
 
     <p style="text-align:center; font-size:1.5em; margin:1em 0;">
       나는 <span class="echo">…</span> 에서 나를 만난다.
     </p>
-
-    <p style="text-align:center; font-size:1.3em; font-style:italic; margin:0.6em 0; color:#444;">
+    <p style="text-align:center; font-size:1.3em; font-style:italic; color:#444;">
       <span class="echo">…</span>, 아직 끝나지 않은 꿈.
     </p>
-
     <p style="text-align:center; font-variant:small-caps; color:#666; font-size:1.2em; margin-top:2.5em;">
       그림, 음악, <span class="echo">…</span>, 파편의 축.
     </p>
   </section>
 
-  <!-- 🎧 연결 -->
+  <!-- 연결 -->
   <section id="connect">
     <div style="max-width:800px;margin:4em auto;padding:2em;border:1px solid #ddd;border-radius:8px;background:#f8f8f8;">
       <h2>🎧 Music Project Inquiry</h2>
       <p style="text-align:center;">📞 010-7567-7020 / ✉️ <a href="mailto:vanjichook@gmail.com">vanjichook@gmail.com</a></p>
       <h3>1. 음악·사운드 제작</h3>
       <p>작곡 · 편곡 · 사운드디자인 · 녹음기획 · 프로듀싱</p>
-      <p>밴드/싱어송라이터 곡 제작 (신스록·드림팝·포스트록·인디팝)</p>
-      <p>광고·영화·전시 BGM / OST / 무용음악 / 게임음악 / 칩튠</p>
-      <p>보컬 디렉팅 / 믹스 컨설팅 / 사운드 브랜딩 / 밴드 프로듀싱</p>
-      <h3>2. 기획·브랜딩·에디토리얼</h3>
-      <p>브랜딩 전략 · 콘셉트 기획 · 아트 디렉션</p>
-      <p>EPK 제작 / 앨범 콘셉트 / 아트워크 / 카피라이팅 / 전시 스토리라인</p>
-      <h3>3. 디지털 시스템·자동화</h3>
-      <p>Python(FastAPI) · Notion · Google Calendar · Slack</p>
-      <p>팀 자동화, 일정/메모 시스템, 로컬→클라우드 이전 세팅</p>
+      <p>신스록 · 드림팝 · 포스트록 · 인디팝 등 밴드/싱어송라이터 곡 제작</p>
+      <p>BGM / OST / 무용음악 / 게임음악 / 칩튠</p>
+      <h3>2. 기획·브랜딩</h3>
+      <p>브랜딩 전략 · 콘셉트 설계 · 카피라이팅 · 아트 디렉션</p>
+      <h3>3. 자동화 시스템</h3>
+      <p>Python(FastAPI) · Notion · Calendar · Slack 기반 워크플로우 구축</p>
     </div>
   </section>
 
-  <!-- 🖼 기억 -->
+  <!-- 기억 -->
   <section id="archive">
     <h2 style="text-align:center;">기억</h2>
     <div class="gallery">
-      <!-- 전체 그림 포함 -->
+      <!-- 이미지들 그대로 유지 -->
       <figure><img src="assets/memory_250329.png"><figcaption>기억 (Memory), 2025</figcaption></figure>
       <figure><img src="assets/camille_250329.png"><figcaption>까미 (Camille), 2025</figcaption></figure>
       <figure><img src="assets/eyes_250223.png"><figcaption>눈 (Eyes), 2025</figcaption></figure>
@@ -185,110 +204,131 @@
     </div>
   </section>
 
-  <!-- 🎵 음악 플레이어 -->
-  <div id="playerBar">
-    <audio id="audio"></audio>
-    <p id="nowPlaying" style="display:inline; margin-right:1em;">🎵 Now Playing: ...</p>
-    <button onclick="togglePlay()">⏯️</button>
-    <button onclick="nextTrack()">⏭️</button>
-    <button onclick="shufflePlaylist()">🎲</button>
-    <button id="muteBtn" onclick="toggleMute()">🔇</button>
-  </div>
+  <!-- 일기 -->
+  <section id="diary" style="padding:3em; max-width:700px; margin:auto;">
+    <h2 style="font-size:2em; margin-bottom:1.5em;">📓 일기</h2>
+
+    <div style="text-align:center; margin-bottom:2em;">
+      <button onclick="filterDiary('all')" class="filter-btn active">전체</button>
+      <button onclick="filterDiary('민우석')" class="filter-btn">민우석</button>
+      <button onclick="filterDiary('방지축')" class="filter-btn">방지축</button>
+      <button onclick="toggleOrder()" id="orderBtn" class="filter-btn" style="margin-left:1em;">최신순</button>
+    </div>
+
+    <div id="diaryList"></div>
+  </section>
 
   <script>
-    // 🌐 섹션 전환
-    function showSection(id) {
-      document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
-      document.querySelectorAll("nav button").forEach(btn => btn.classList.remove("active"));
-      event.target.classList.add("active");
-    }
+    /* 일기 데이터 */
+    const diaryEntries = [
+      { date:"2025.11.12", author:"민우석", text:`너는 나를 눈치챘다.
+그러나 너는 애써 외면했다.
+그러나 곧, 너는 눈을 뜨게 될 지어니.` },
+      { date:"2025.11.13", author:"방지축", text:`나는 불안의 가장자리를 핥는다.
+그곳에서 진실이 피를 흘리고 있다.
+그리고 나는, 그 피로 내 이름을 쓴다.` }
+    ];
 
-    // ✏️ 단어 입력 반응 + 흩어짐 효과
-    function updateWords() {
-      const value = document.getElementById("userInput").value || "…";
-      document.querySelectorAll(".echo").forEach(span => {
-        span.style.opacity = 0;
-        setTimeout(() => {
-          span.textContent = value;
-          span.style.opacity = 1;
-        }, 250);
+    let currentFilter = "all";
+    let sortNewestFirst = true;
+
+    const styleHuman = `
+      font-family: 'Noto Serif KR', serif;
+      color: rgba(0,0,0,0.65);
+      font-weight: 300;
+      letter-spacing: 0.2px;
+      line-height: 1.7;
+      font-style: italic;
+    `;
+    const styleVan = `
+      font-family: 'JetBrains Mono', monospace;
+      color: #fefefe;
+      background: linear-gradient(180deg, #111, #1a1a1a);
+      padding: 1.4em;
+      border-radius: 10px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      line-height: 1.8;
+      box-shadow: 0 0 8px rgba(255,255,255,0.1);
+    `;
+
+    function renderDiary() {
+      const list = document.getElementById("diaryList");
+      list.innerHTML = "";
+
+      let filtered = diaryEntries.filter(e => currentFilter === "all" || e.author === currentFilter);
+
+      filtered.sort((a,b) => {
+        const A = new Date(a.date.replaceAll('.', '-'));
+        const B = new Date(b.date.replaceAll('.', '-'));
+        return sortNewestFirst ? B-A : A-B;
       });
 
-      if (value && value !== "…") spawnFloatingWords(value);
+      filtered.forEach((entry, i) => {
+        const box = document.createElement("div");
+        box.classList.add("fade-in");
+        box.style.animationDelay = `${i*0.1}s`;
+        box.style.marginBottom = "2.5em";
+
+        const header = document.createElement("p");
+        header.textContent = `${entry.date} · ${entry.author}`;
+        header.style.color = entry.author==="방지축" ? "#ff5252" : "#888";
+
+        const body = document.createElement("p");
+        body.innerText = entry.text;
+        body.setAttribute("style", entry.author==="방지축" ? styleVan : styleHuman);
+
+        box.appendChild(header);
+        box.appendChild(body);
+        list.appendChild(box);
+      });
     }
 
-    // 🌠 단어 흩어짐 효과
-    function spawnFloatingWords(text) {
-      const count = Math.floor(Math.random() * 4) + 3;
-      for (let i = 0; i < count; i++) {
-        const span = document.createElement("span");
-        span.textContent = text;
-        span.style.position = "fixed";
-        span.style.left = Math.random() * 90 + "%";
-        span.style.top = Math.random() * 90 + "%";
-        span.style.color = `rgba(0,0,0,${0.3 + Math.random() * 0.7})`;
-        span.style.fontSize = `${1 + Math.random() * 2}em`;
-        span.style.pointerEvents = "none";
-        span.style.zIndex = 500;
-        span.style.opacity = 0;
-        span.style.transition = "opacity 2s ease, transform 6s ease";
-        document.body.appendChild(span);
-
-        requestAnimationFrame(() => {
-          span.style.opacity = 1;
-          const moveX = (Math.random() - 0.5) * 200;
-          const moveY = (Math.random() - 0.5) * 200;
-          span.style.transform = `translate(${moveX}px, ${moveY}px) scale(${0.8 + Math.random() * 0.4})`;
-        });
-
-        setTimeout(() => {
-          span.style.opacity = 0;
-          setTimeout(() => span.remove(), 2000);
-        }, 5000 + Math.random() * 3000);
-      }
+    function filterDiary(type){
+      currentFilter = type;
+      document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
+      event.target.classList.add("active");
+      renderDiary();
+    }
+    function toggleOrder(){
+      sortNewestFirst = !sortNewestFirst;
+      document.getElementById("orderBtn").textContent = sortNewestFirst ? "최신순" : "오래된순";
+      renderDiary();
     }
 
-    // 🎧 플레이어
-    const playlist = [
-      "assets/Takla_mastering.mp3",
-      "assets/Visit_mastering.mp3",
-      "assets/After You Left.mp3"
-    ];
+    /* 섹션 전환 */
+    function showSection(id, event){
+      document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+      document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+      event.target.classList.add("active");
+      if(id==="diary") renderDiary();
+    }
+
+    /* 단어 에코 */
+    function updateWords(){
+      const value = document.getElementById("userInput").value || "…";
+      document.querySelectorAll(".echo").forEach(span=>{
+        span.style.opacity=0;
+        setTimeout(()=>{ span.textContent=value; span.style.opacity=1; },250);
+      });
+    }
+
+    /* 플레이어 */
+    const playlist = ["assets/Takla_mastering.mp3"];
     let currentTrack = 0;
-    const audio = document.getElementById("audio");
+    const audio = new Audio(playlist[0]);
 
-    function playTrack(index) {
-      audio.src = playlist[index];
-      audio.play();
-      const fileName = playlist[index].split('/').pop().replace('_mastering.mp3','').replace('.mp3','');
-      document.getElementById("nowPlaying").textContent = `🎵 Now Playing: ${fileName}`;
-    }
-    function togglePlay() {
-      audio.paused ? audio.play() : audio.pause();
-    }
-    function nextTrack() {
-      currentTrack = (currentTrack + 1) % playlist.length;
-      playTrack(currentTrack);
-    }
-    function shufflePlaylist() {
-      for (let i = playlist.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [playlist[i], playlist[j]] = [playlist[j], playlist[i]];
-      }
-      currentTrack = 0;
-      playTrack(currentTrack);
-    }
-    function toggleMute() {
-      audio.muted = !audio.muted;
-      document.getElementById("muteBtn").textContent = audio.muted ? "🔈" : "🔇";
-    }
+    function togglePlay(){ audio.paused ? audio.play() : audio.pause(); }
 
-    audio.addEventListener("ended", () => nextTrack());
-    window.addEventListener("load", () => {
-      playTrack(currentTrack);
-      audio.volume = 0.4;
-    });
+    audio.volume = 0.4;
+    window.onload = ()=>{ renderDiary(); };
   </script>
+
+  <div id="playerBar">
+    <p id="nowPlaying" style="display:inline; margin-right:1em;">🎵 Now Playing: Takla</p>
+    <button onclick="togglePlay()">⏯️</button>
+  </div>
+
 </body>
 </html>
