@@ -267,7 +267,7 @@ async function loadDiarySection() {
 }
 
 /* ------------------------------
-   🪶 섹션 전환
+   🪶 섹션 전환 (일기 즉시 렌더링 수정 버전)
 ------------------------------ */
 async function showSection(id, event) {
   document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
@@ -275,11 +275,22 @@ async function showSection(id, event) {
   event.target.classList.add("active");
 
   if (id === "diary") {
+    // diary.html을 아직 한 번도 안 불러온 경우
     if (!document.getElementById("diaryList")) {
-      await loadDiarySection(); // diary.html 최초 1회만 로드
+      await loadDiarySection(); // diary.html 로드
     }
-    if (typeof renderDiary === "function") renderDiary();
-  } else {
+
+    // diary.html 로드가 끝난 직후 renderDiary 호출
+    if (typeof renderDiary === "function") {
+      renderDiary();
+    }
+
+    // 일기 섹션 활성화
+    const diarySection = document.getElementById("diary");
+    if (diarySection) diarySection.classList.add("active");
+  } 
+  else {
+    // 다른 섹션 클릭 시 즉시 표시
     document.getElementById(id).classList.add("active");
   }
 }
