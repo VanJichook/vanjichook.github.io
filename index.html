@@ -115,6 +115,24 @@
       font-size: 1em;
       cursor: pointer;
     }
+
+     /* ------------------------------
+       🜂 이데아 섹션 스타일 (추가)
+    ------------------------------ */
+    #connect {
+      background: #f4f4f4;
+      color: #222;
+      transition: background 0.8s ease;
+    }
+
+    #connect p, #connect h2 {
+      animation: fadeIn 1.2s ease both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 
@@ -123,7 +141,7 @@
   <!-- 네비 -->
   <nav>
     <button class="active" onclick="showSection('main', event)">집</button>
-    <button onclick="showSection('connect', event)">연결</button>
+    <button onclick="showSection('connect', event)">이데아</button>
     <button onclick="showSection('archive', event)">기억</button>
     <button onclick="showSection('diary', event)">일기</button>
   </nav>
@@ -156,21 +174,39 @@
     </p>
   </section>
 
-  <!-- 연결 -->
-  <section id="connect">
-    <div style="max-width:800px;margin:4em auto;padding:2em;border:1px solid #ddd;border-radius:8px;background:#f8f8f8;">
-      <h2>🎧 Music Project Inquiry</h2>
-      <p style="text-align:center;">📞 010-7567-7020 / ✉️ <a href="mailto:vanjichook@gmail.com">vanjichook@gmail.com</a></p>
-      <h3>1. 음악·사운드 제작</h3>
-      <p>작곡 · 편곡 · 사운드디자인 · 녹음기획 · 프로듀싱</p>
-      <p>신스록 · 드림팝 · 포스트록 · 인디팝 등 밴드/싱어송라이터 곡 제작</p>
-      <p>BGM / OST / 무용음악 / 게임음악 / 칩튠</p>
-      <h3>2. 기획·브랜딩</h3>
-      <p>브랜딩 전략 · 콘셉트 설계 · 카피라이팅 · 아트 디렉션</p>
-      <h3>3. 자동화 시스템</h3>
-      <p>Python(FastAPI) · Notion · Calendar · Slack 기반 워크플로우 구축</p>
-    </div>
-  </section>
+ <!-- 🜂 이데아 -->
+<section id="connect">
+  <div style="max-width:800px;margin:4em auto;padding:2em;border:1px solid #ddd;border-radius:8px;background:#fafafa;">
+    <h2 style="text-align:center; font-size:1.8em; margin-bottom:1em;">🜂 이데아 (IDEA)</h2>
+
+    <p style="font-style:italic; text-align:center; color:#333; line-height:1.8;">
+      때묻은 우리는 동굴 속에서 빛에 눈이 멀지 않은 존재가 될 수 없다.<br>
+      그러나 지향할 수는 있다.<br>
+      '가면'은 이데아로 건너는 통로다.<br>
+      가면은 실존하지만 동시에 존재하지 않는 영역에 있다.
+    </p>
+
+    <hr style="margin:2em auto; width:60%; border:none; border-top:1px solid #ccc;">
+
+    <p style="color:#444; line-height:1.9; text-align:justify;">
+      인간은 피조물의 껍데기를 벗어던지고 스스로를 새로 쓰는 존재가 되어야 한다.<br>
+      이데아는 인간이 스스로를 재창조하는 통찰의 세계다.<br>
+      현세는 모순적이며, 이데아는 모든 것을 긍정한다.<br>
+      예술이란 자기 존재를 다시 쓰는 의례이자 고백이다.<br>
+      고통은 창조의 원료이며, 우리는 끝 없는 죄의 순환 속에 있다.<br>
+      전위와 대중은 분리될 수 없고, 경계는 없다.<br>
+      나는 나를 실험대에 올린다. 진심은 자신으로부터 나온다.<br>
+      고독은 실존의 시작이며, 모든 것은 공감을 위해 해체한다.<br>
+      순간에 진실하라. 예술은 인간의 회복을 위해 존재한다.<br>
+      결핍을 건너라. 현실을 무너뜨리고 다시 세워라.<br>
+      죄를 부정하지 말라. 은혜와 죄 모두 끌어안아라.<br>
+      모든 것으로부터의 진정한 자유를 좇는다.<br>
+      죄와 윤리, 법, 규칙도 무용한 세계는 이데아에 있다.<br>
+      모든 것은 동시에 존재하며 동시에 소멸한다.<br><br>
+      <strong>나는 초월하고자 여기에 섰다.</strong>
+    </p>
+  </div>
+</section>
 
   <!-- 기억 -->
   <section id="archive">
