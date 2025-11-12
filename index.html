@@ -139,9 +139,11 @@
     </p>
 
     <div style="text-align:center; margin:4em auto;">
-      <input id="userInput" placeholder="..." oninput="updateWords()"
-      style="padding:0.7em 1.2em; font-size:1.1em; width:280px; border:1px solid #ccc; text-align:center; border-radius:6px;">
-    </div>
+  <input
+    id="userInput"
+    placeholder="..."
+    style="padding:0.7em 1.2em; font-size:1.1em; width:280px; border:1px solid #ccc; text-align:center; border-radius:6px;">
+</div>
 
     <p style="text-align:center; font-size:1.5em; margin:1em 0;">
       나는 <span class="echo">…</span> 에서 나를 만난다.
@@ -307,13 +309,59 @@
 
     /* 단어 에코 */
     function updateWords(){
-      const value = document.getElementById("userInput").value || "…";
-      document.querySelectorAll(".echo").forEach(span=>{
-        span.style.opacity=0;
-        setTimeout(()=>{ span.textContent=value; span.style.opacity=1; },250);
-      });
-    }
+  const value = document.getElementById("userInput").value || "…";
+  document.querySelectorAll(".echo").forEach(span=>{
+    span.style.opacity = 0;
+    setTimeout(()=>{ 
+      span.textContent = value; 
+      span.style.opacity = 1; 
+    }, 250);
+  });
+  // ✨ 단어 흩어짐 (입력이 있을 때만)
+  if (value && value !== "…") spawnFloatingWords(value);
+}
+    // 🪶 한글 입력 중간단계 방지
+let isComposing = false;
+const inputField = document.getElementById("userInput");
 
+inputField.addEventListener("compositionstart", () => { isComposing = true; });
+inputField.addEventListener("compositionend", () => {
+  isComposing = false;
+  updateWords(); // 조합 완료 시 실행
+});
+inputField.addEventListener("input", () => {
+  if (!isComposing) updateWords(); // 조합 중에는 무시
+});
+    // 🌠 단어 흩어짐 효과
+function spawnFloatingWords(text) {
+  const count = Math.floor(Math.random() * 4) + 3; // 흩어지는 수
+  for (let i = 0; i < count; i++) {
+    const span = document.createElement("span");
+    span.textContent = text;
+    span.style.position = "fixed";
+    span.style.left = Math.random() * 90 + "%";
+    span.style.top = Math.random() * 90 + "%";
+    span.style.color = `rgba(0,0,0,${0.3 + Math.random() * 0.7})`;
+    span.style.fontSize = `${1 + Math.random() * 2}em`;
+    span.style.pointerEvents = "none";
+    span.style.zIndex = 500;
+    span.style.opacity = 0;
+    span.style.transition = "opacity 2s ease, transform 6s ease";
+    document.body.appendChild(span);
+
+    requestAnimationFrame(() => {
+      span.style.opacity = 1;
+      const moveX = (Math.random() - 0.5) * 200;
+      const moveY = (Math.random() - 0.5) * 200;
+      span.style.transform = `translate(${moveX}px, ${moveY}px) scale(${0.8 + Math.random() * 0.4})`;
+    });
+
+    setTimeout(() => {
+      span.style.opacity = 0;
+      setTimeout(() => span.remove(), 2000);
+    }, 5000 + Math.random() * 3000);
+  }
+}
     /* 플레이어 */
     const playlist = ["assets/Takla_mastering.mp3"];
     let currentTrack = 0;
