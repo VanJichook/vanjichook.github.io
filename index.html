@@ -207,6 +207,34 @@
   </section>
 
 <script>
+   // ✅ 오른쪽 클릭 방지 (updateWords 밖에서 선언!)
+function showRightClickMessage() {
+  const msg = document.createElement("div");
+  msg.textContent = "이곳의 순간은 지금으로만 묻어둬.";
+  msg.style.position = "fixed";
+  msg.style.top = "50%";
+  msg.style.left = "50%";
+  msg.style.transform = "translate(-50%, -50%)";
+  msg.style.background = "rgba(0, 0, 0, 0.7)";
+  msg.style.color = "#fff";
+  msg.style.padding = "1em 2em";
+  msg.style.borderRadius = "8px";
+  msg.style.zIndex = "2000";
+  msg.style.fontStyle = "italic";
+  msg.style.opacity = "0";
+  msg.style.transition = "opacity 0.5s ease";
+  document.body.appendChild(msg);
+  requestAnimationFrame(() => {
+    msg.style.opacity = "1";
+  });
+  setTimeout(() => {
+    msg.style.opacity = "0";
+    setTimeout(() => {
+      document.body.removeChild(msg);
+    }, 500);
+  }, 2000);
+}
+
 /* ------------------------------
    🌙 diary.html 불러오기 (스크립트 실행 포함)
 ------------------------------ */
@@ -312,30 +340,42 @@ async function showSection(id, event) {
   }
  </script>
   
-  <!-- 🎧 숨겨진 오디오 플레이어 -->
+  <!-- 🎧 오디오 플레이어 + 오른쪽 클릭 문구 + 개선된 오버레이 -->
 <audio id="audio" style="display:none;"></audio>
 
-<p id="nowPlaying" style="text-align:center; margin-top:2em; font-style:italic; color:#555;">
-  🎵 Now Playing: ...
-</p>
-
-<div style="text-align:center; margin:3em auto;">
-  <button onclick="togglePlay()" style="margin:0 0.5em;">⏯️ play / pause</button>
-  <button onclick="nextTrack()" style="margin:0 0.5em;">⏭️ next</button>
-  <button onclick="shufflePlaylist()" style="margin:0 0.5em;">🎲 shuffle</button>
-  <button id="muteBtn" onclick="toggleMute()" style="margin:0 0.5em;">🔇 mute</button>
-  <button id="modeBtn" onclick="togglePlaylistMode()" style="margin:0 0.5em;">🎧 현재: <strong>vanjichook</strong></button>
+<div id="playerBar" style="
+  position:fixed;
+  bottom:0; left:0; width:100%;
+  background:rgba(255,255,255,0.85);
+  backdrop-filter:blur(6px);
+  text-align:center;
+  padding:0.8em 0;
+  border-top:1px solid rgba(0,0,0,0.1);
+  z-index:1200;
+  font-family:'Noto Sans KR', sans-serif;
+">
+  <span id="nowPlaying" style="font-style:italic; color:#333;">
+    🎵 Now Playing: ...
+  </span>
+  <div style="margin-top:0.5em;">
+    <button onclick="togglePlay()">⏯️ play / pause</button>
+    <button onclick="nextTrack()">⏭️ next</button>
+    <button onclick="shufflePlaylist()">🎲 shuffle</button>
+    <button id="muteBtn" onclick="toggleMute()">🔇 mute</button>
+    <button id="modeBtn" onclick="togglePlaylistMode()">🎧 현재: <strong>vanjichook</strong></button>
+  </div>
 </div>
 
 <!-- 🌑 음소거 오버레이 -->
 <div id="darkOverlay" style="
   display:none; opacity:0;
   transition:opacity 0.5s ease;
+  pointer-events:none; /* 기본 클릭 차단 방지 */
   position:fixed; top:0; left:0;
   width:100%; height:100%;
   background:rgba(0,0,0,0.7);
-  z-index:1500;">
-</div>
+  z-index:1100;
+"></div>
 <div id="muteOverlayText" style="
   display:none;
   position:fixed;
@@ -344,7 +384,8 @@ async function showSection(id, event) {
   color:#fff;
   font-style:italic;
   font-size:1.2em;
-  z-index:1600;">
+  z-index:1150;
+">
   (silence surrounds the dream)
 </div>
 
@@ -356,18 +397,18 @@ const playlists = {
   vanjichook: [
     "assets/Takla_mastering.mp3",
     "assets/Visit_mastering.mp3",
-    "assets/After You Left.mp3",
-    "assets/TSR_Trans-Siberian Railway.mp3",
+    "assets/After_You_Left.mp3",
+    "assets/TSR_Trans-Siberian_Railway.mp3",
     "assets/Omni.mp3",
     "assets/Querencia.mp3",
-    "assets/Before Sunrise.mp3",
+    "assets/Before_Sunrise.mp3",
     "assets/Looove.mp3"
   ],
   wooseok: [
     "assets/빠졌네_Inst.mp3",
     "assets/용가리도_하늘을_날고_싶어_Inst.mp3",
     "assets/will.mp3",
-    "assets/너는_내게_달빛_You're_The_One.mp3",
+    "assets/너는_내게_달빛_Youre_The_One.mp3",
     "assets/Noise.mp3",
     "assets/Sophie.mp3"
   ]
@@ -383,8 +424,11 @@ function playTrack(index) {
   if (!list || list.length === 0) return;
 
   currentTrack = index % list.length;
-  audio.src = list[currentTrack];
-  audio.play();
+
+  // ✅ 한글 및 공백, 괄호 자동 인코딩 처리
+  audio.src = encodeURI(list[currentTrack]);
+
+  audio.play().catch(err => console.error("Audio play failed:", err));
 
   const name = list[currentTrack].split("/").pop().replace(".mp3", "");
   document.getElementById("nowPlaying").textContent = `🎵 Now Playing: [${mode}] ${name}`;
@@ -392,7 +436,11 @@ function playTrack(index) {
 
 /* ⏯️ 제어 */
 function togglePlay() { audio.paused ? audio.play() : audio.pause(); }
-function nextTrack() { const list = playlists[mode]; currentTrack = (currentTrack + 1) % list.length; playTrack(currentTrack); }
+function nextTrack() {
+  const list = playlists[mode];
+  currentTrack = (currentTrack + 1) % list.length;
+  playTrack(currentTrack);
+}
 function shufflePlaylist() {
   const list = playlists[mode];
   for (let i = list.length - 1; i > 0; i--) {
@@ -419,17 +467,48 @@ function toggleMute() {
   const btn = document.getElementById("muteBtn");
 
   if (audio.muted) {
+    overlay.style.pointerEvents = "auto"; // 클릭 차단 활성화
     overlay.style.display = "block";
     overlay.style.opacity = "1";
     text.style.display = "block";
     btn.textContent = "🔈 unmute";
   } else {
+    overlay.style.pointerEvents = "none"; // 클릭 가능 복구
     overlay.style.opacity = "0";
     text.style.display = "none";
     setTimeout(() => (overlay.style.display = "none"), 500);
     btn.textContent = "🔇 mute";
   }
 }
+
+/* 🖱️ 오른쪽 클릭 문구 */
+function showRightClickMessage() {
+  const msg = document.createElement("div");
+  msg.textContent = "이곳의 순간은 지금으로만 묻어둬.";
+  Object.assign(msg.style, {
+    position: "fixed",
+    top: "50%", left: "50%",
+    transform: "translate(-50%, -50%)",
+    background: "rgba(0, 0, 0, 0.7)",
+    color: "#fff",
+    padding: "1em 2em",
+    borderRadius: "8px",
+    zIndex: "3000",
+    fontStyle: "italic",
+    opacity: "0",
+    transition: "opacity 0.5s ease"
+  });
+  document.body.appendChild(msg);
+  requestAnimationFrame(() => (msg.style.opacity = "1"));
+  setTimeout(() => {
+    msg.style.opacity = "0";
+    setTimeout(() => msg.remove(), 500);
+  }, 2000);
+}
+document.addEventListener("contextmenu", e => {
+  e.preventDefault();
+  showRightClickMessage();
+});
 
 /* 초기화 */
 audio.addEventListener("ended", nextTrack);
