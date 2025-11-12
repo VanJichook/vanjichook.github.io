@@ -208,18 +208,22 @@
 
    <script>
   /* ------------------------------
-     🌙 diary.html 불러오기
-  ------------------------------ */
-  async function loadDiarySection() {
+   🌙 diary.html 불러오기 (스크립트 실행 포함)
+------------------------------ */
+async function loadDiarySection() {
   try {
     const res = await fetch("./diary.html");
+    if (!res.ok) throw new Error(res.statusText);
     const html = await res.text();
 
-    const container = document.getElementById("diaryContainer");
+    const container = document.getElementById("diaryContainer") || document.createElement("div");
+    container.id = "diaryContainer";
     container.innerHTML = html;
+    document.body.appendChild(container);
 
-    // 🔹 새로 삽입된 script 요소 직접 실행시키기
-    container.querySelectorAll("script").forEach(oldScript => {
+    // 📦 diary.html 안의 script를 실행시켜야 renderDiary()가 등록됨
+    const scripts = container.querySelectorAll("script");
+    for (const oldScript of scripts) {
       const newScript = document.createElement("script");
       if (oldScript.src) {
         newScript.src = oldScript.src;
@@ -228,9 +232,15 @@
       }
       document.body.appendChild(newScript);
       oldScript.remove();
-    });
+    }
 
-    console.log("✅ diary.html loaded & script executed");
+    console.log("✅ diary.html loaded & executed");
+
+    // 실행 완료 후 diary 섹션 보이기
+    const diarySection = document.getElementById("diary");
+    if (diarySection) diarySection.classList.add("active");
+    if (typeof renderDiary === "function") renderDiary();
+
   } catch (err) {
     console.error("❌ diary.html load failed:", err);
   }
@@ -322,7 +332,53 @@
     // diary.html이 이미 로드된 경우 초기 렌더 실행
     if (typeof renderDiary === "function") renderDiary();
   };
-  </script>
+     <!-- 🌌 갤러리 이미지 확대 -->
+
+document.addEventListener("DOMContentLoaded", () => {
+  // 모든 갤러리 이미지 선택
+  const images = document.querySelectorAll(".gallery img");
+
+  // 팝업 요소 만들기
+  const overlay = document.createElement("div");
+  overlay.id = "imgOverlay";
+  overlay.style.position = "fixed";
+  overlay.style.top = 0;
+  overlay.style.left = 0;
+  overlay.style.width = "100vw";
+  overlay.style.height = "100vh";
+  overlay.style.background = "rgba(0,0,0,0.8)";
+  overlay.style.display = "none";
+  overlay.style.alignItems = "center";
+  overlay.style.justifyContent = "center";
+  overlay.style.zIndex = "2000";
+  overlay.style.cursor = "zoom-out";
+
+  const img = document.createElement("img");
+  img.style.maxWidth = "90vw";
+  img.style.maxHeight = "90vh";
+  img.style.borderRadius = "10px";
+  img.style.boxShadow = "0 4px 25px rgba(0,0,0,0.4)";
+  img.style.transition = "transform 0.3s ease";
+  overlay.appendChild(img);
+  document.body.appendChild(overlay);
+
+  // 클릭 이벤트 등록
+  images.forEach(el => {
+    el.style.cursor = "zoom-in";
+    el.addEventListener("click", () => {
+      img.src = el.src;
+      overlay.style.display = "flex";
+      setTimeout(() => (img.style.transform = "scale(1)"), 10);
+    });
+  });
+
+  // 오버레이 클릭 시 닫기
+  overlay.addEventListener("click", () => {
+    img.style.transform = "scale(0.95)";
+    setTimeout(() => (overlay.style.display = "none"), 200);
+  });
+});
+</script>
 
   <div id="playerBar">
     <p id="nowPlaying" style="display:inline; margin-right:1em;">🎵 Now Playing: Takla</p>
