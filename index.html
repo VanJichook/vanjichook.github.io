@@ -211,10 +211,30 @@
      🌙 diary.html 불러오기
   ------------------------------ */
   async function loadDiarySection() {
-    const res = await fetch("diary.html");
+  try {
+    const res = await fetch("./diary.html");
     const html = await res.text();
-    document.getElementById("diaryContainer").innerHTML = html;
+
+    const container = document.getElementById("diaryContainer");
+    container.innerHTML = html;
+
+    // 🔹 새로 삽입된 script 요소 직접 실행시키기
+    container.querySelectorAll("script").forEach(oldScript => {
+      const newScript = document.createElement("script");
+      if (oldScript.src) {
+        newScript.src = oldScript.src;
+      } else {
+        newScript.textContent = oldScript.textContent;
+      }
+      document.body.appendChild(newScript);
+      oldScript.remove();
+    });
+
+    console.log("✅ diary.html loaded & script executed");
+  } catch (err) {
+    console.error("❌ diary.html load failed:", err);
   }
+}
 
   /* ------------------------------
      🪶 섹션 전환
