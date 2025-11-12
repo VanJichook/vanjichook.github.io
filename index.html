@@ -206,8 +206,8 @@
     </div>
   </section>
 
-   <script>
-  /* ------------------------------
+<script>
+/* ------------------------------
    🌙 diary.html 불러오기 (스크립트 실행 포함)
 ------------------------------ */
 async function loadDiarySection() {
@@ -221,24 +221,16 @@ async function loadDiarySection() {
     container.innerHTML = html;
     document.body.appendChild(container);
 
-    // 📦 diary.html 안의 script를 실행시켜야 renderDiary()가 등록됨
+    // 📦 diary.html 안의 script 실행 (renderDiary 등록용)
     const scripts = container.querySelectorAll("script");
     for (const oldScript of scripts) {
       const newScript = document.createElement("script");
-      if (oldScript.src) {
-        newScript.src = oldScript.src;
-      } else {
-        newScript.textContent = oldScript.textContent;
-      }
+      newScript.textContent = oldScript.textContent;
       document.body.appendChild(newScript);
       oldScript.remove();
     }
 
     console.log("✅ diary.html loaded & executed");
-
-    // 실행 완료 후 diary 섹션 보이기
-    const diarySection = document.getElementById("diary");
-    if (diarySection) diarySection.classList.add("active");
     if (typeof renderDiary === "function") renderDiary();
 
   } catch (err) {
@@ -246,24 +238,23 @@ async function loadDiarySection() {
   }
 }
 
-  /* ------------------------------
-     🪶 섹션 전환
-  ------------------------------ */
-  async function showSection(id, event) {
-    document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
-    document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
-    event.target.classList.add("active");
+/* ------------------------------
+   🪶 섹션 전환
+------------------------------ */
+async function showSection(id, event) {
+  document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
+  event.target.classList.add("active");
 
-    if (id === "diary") {
-      if (!document.getElementById("diaryList")) {
-        await loadDiarySection();  // 처음 한 번만 diary.html 가져오기
-      }
-      // diary.html 내부에서 renderDiary가 정의된 뒤 실행
-      if (typeof renderDiary === "function") renderDiary();
-    } else {
-      document.getElementById(id).classList.add("active");
+  if (id === "diary") {
+    if (!document.getElementById("diaryList")) {
+      await loadDiarySection(); // diary.html 최초 1회만 로드
     }
+    if (typeof renderDiary === "function") renderDiary();
+  } else {
+    document.getElementById(id).classList.add("active");
   }
+}
 
   /* ------------------------------
      ✨ 단어 에코 효과
@@ -319,72 +310,46 @@ async function loadDiarySection() {
       }, 5000 + Math.random() * 3000);
     }
   }
-
+ </script>
+  
   <!-- 🎧 숨겨진 오디오 플레이어 -->
-  <audio id="audio" style="display:none;"></audio>
+<audio id="audio" style="display:none;"></audio>
 
-  <p id="nowPlaying" style="text-align:center; margin-top:2em; font-style:italic; color:#555;">
-    🎵 Now Playing: ...
-  </p>
+<p id="nowPlaying" style="text-align:center; margin-top:2em; font-style:italic; color:#555;">
+  🎵 Now Playing: ...
+</p>
 
 <div style="text-align:center; margin:3em auto;">
   <button onclick="togglePlay()" style="margin:0 0.5em;">⏯️ play / pause</button>
   <button onclick="nextTrack()" style="margin:0 0.5em;">⏭️ next</button>
   <button onclick="shufflePlaylist()" style="margin:0 0.5em;">🎲 shuffle</button>
   <button id="muteBtn" onclick="toggleMute()" style="margin:0 0.5em;">🔇 mute</button>
-  <button id="modeBtn" onclick="togglePlaylistMode()" style="margin:0 0.5em;">🎧 전환</button>
+  <button id="modeBtn" onclick="togglePlaylistMode()" style="margin:0 0.5em;">🎧 현재: <strong>vanjichook</strong></button>
 </div>
 
-  <!-- 🌑 음소거 오버레이 -->
-  <div id="darkOverlay" style="
-    display:none; opacity:0;
-    transition:opacity 0.5s ease;
-    position:fixed; top:0; left:0;
-    width:100%; height:100%;
-    background:rgba(0,0,0,0.7);
-    z-index:1500;">
-  </div>
-  <div id="muteOverlayText" style="
-    display:none;
-    position:fixed;
-    top:50%; left:50%;
-    transform:translate(-50%, -50%);
-    color:#fff;
-    font-style:italic;
-    font-size:1.2em;
-    z-index:1600;">
-    (silence surrounds the dream)
-  </div>
+<!-- 🌑 음소거 오버레이 -->
+<div id="darkOverlay" style="
+  display:none; opacity:0;
+  transition:opacity 0.5s ease;
+  position:fixed; top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.7);
+  z-index:1500;">
+</div>
+<div id="muteOverlayText" style="
+  display:none;
+  position:fixed;
+  top:50%; left:50%;
+  transform:translate(-50%, -50%);
+  color:#fff;
+  font-style:italic;
+  font-size:1.2em;
+  z-index:1600;">
+  (silence surrounds the dream)
+</div>
 
-  <script>
-  /* ------------------------------
-     🌙 diary.html 로드
-  ------------------------------ */
-  async function loadDiarySection() {
-    try {
-      const res = await fetch("./diary.html?v=" + Date.now());
-      const html = await res.text();
-      const container = document.getElementById("diaryContainer") || document.createElement("div");
-      container.id = "diaryContainer";
-      container.innerHTML = html;
-      document.body.appendChild(container);
-
-      // diary.html 내부 script 실행
-      container.querySelectorAll("script").forEach(oldScript => {
-        const s = document.createElement("script");
-        s.textContent = oldScript.textContent;
-        document.body.appendChild(s);
-        oldScript.remove();
-      });
-
-      console.log("✅ diary.html loaded & executed");
-      if (typeof renderDiary === "function") renderDiary();
-    } catch (err) {
-      console.error("❌ diary.html load failed:", err);
-    }
-  }
-
- /* ------------------------------
+<script>
+/* ------------------------------
    🎧 두 자아 플레이리스트
 ------------------------------ */
 const playlists = {
@@ -399,22 +364,20 @@ const playlists = {
     "assets/Looove.mp3"
   ],
   wooseok: [
-    "assets/빠졌네_Inst.mp3",
-    "assets/용가리도 하늘을 날고 싶어_Inst.mp3",
+    "assets/빠졌네_Inst.mp3",
+    "assets/용가리도_하늘을_날고_싶어_Inst.mp3",
     "assets/will.mp3",
-    "assets/너는 내게 달빛_You're The One.mp3",
+    "assets/너는_내게_달빛_You're_The_One.mp3",
     "assets/Noise.mp3",
     "assets/Sophie.mp3"
   ]
 };
 
-let mode = "vanjichook";  // 기본 모드
+let mode = "vanjichook";
 let currentTrack = 0;
 const audio = document.getElementById("audio");
 
-/* ------------------------------
-   🎵 재생
------------------------------- */
+/* 🎵 재생 */
 function playTrack(index) {
   const list = playlists[mode];
   if (!list || list.length === 0) return;
@@ -423,27 +386,13 @@ function playTrack(index) {
   audio.src = list[currentTrack];
   audio.play();
 
-  const name = list[currentTrack].split("/").pop()
-    .replace("_mastering.mp3", "")
-    .replace(".mp3", "");
-
-  document.getElementById("nowPlaying").textContent =
-    `🎵 Now Playing: [${mode}] ${name}`;
+  const name = list[currentTrack].split("/").pop().replace(".mp3", "");
+  document.getElementById("nowPlaying").textContent = `🎵 Now Playing: [${mode}] ${name}`;
 }
 
-/* ------------------------------
-   ⏯️ 제어
------------------------------- */
-function togglePlay() {
-  audio.paused ? audio.play() : audio.pause();
-}
-
-function nextTrack() {
-  const list = playlists[mode];
-  currentTrack = (currentTrack + 1) % list.length;
-  playTrack(currentTrack);
-}
-
+/* ⏯️ 제어 */
+function togglePlay() { audio.paused ? audio.play() : audio.pause(); }
+function nextTrack() { const list = playlists[mode]; currentTrack = (currentTrack + 1) % list.length; playTrack(currentTrack); }
 function shufflePlaylist() {
   const list = playlists[mode];
   for (let i = list.length - 1; i > 0; i--) {
@@ -454,20 +403,15 @@ function shufflePlaylist() {
   playTrack(currentTrack);
 }
 
-/* ------------------------------
-   🎧 자아 전환
------------------------------- */
+/* 🎧 자아 전환 */
 function togglePlaylistMode() {
   mode = mode === "vanjichook" ? "wooseok" : "vanjichook";
-  document.getElementById("modeBtn").innerHTML =
-    `🎧 현재: <strong>${mode}</strong>`;
+  document.getElementById("modeBtn").innerHTML = `🎧 현재: <strong>${mode}</strong>`;
   currentTrack = 0;
   playTrack(currentTrack);
 }
 
-/* ------------------------------
-   🔇 음소거
------------------------------- */
+/* 🔇 음소거 */
 function toggleMute() {
   audio.muted = !audio.muted;
   const overlay = document.getElementById("darkOverlay");
@@ -487,56 +431,54 @@ function toggleMute() {
   }
 }
 
+/* 초기화 */
 audio.addEventListener("ended", nextTrack);
 window.addEventListener("load", () => {
   audio.volume = 0.4;
   playTrack(currentTrack);
 });
 
+/* 🌌 갤러리 이미지 확대 */
+document.addEventListener("DOMContentLoaded", () => {
+  const images = document.querySelectorAll(".gallery img");
+  const overlay = document.createElement("div");
+  overlay.id = "imgOverlay";
+  Object.assign(overlay.style, {
+    position: "fixed",
+    top: 0, left: 0, width: "100vw", height: "100vh",
+    background: "rgba(0,0,0,0.8)",
+    display: "none",
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 2000,
+    cursor: "zoom-out"
+  });
 
-  /* ------------------------------
-     🌌 갤러리 이미지 확대
-  ------------------------------ */
-  document.addEventListener("DOMContentLoaded", () => {
-    const images = document.querySelectorAll(".gallery img");
-    const overlay = document.createElement("div");
-    overlay.id = "imgOverlay";
-    Object.assign(overlay.style, {
-      position: "fixed",
-      top: 0, left: 0, width: "100vw", height: "100vh",
-      background: "rgba(0,0,0,0.8)",
-      display: "none",
-      alignItems: "center",
-      justifyContent: "center",
-      zIndex: 2000,
-      cursor: "zoom-out"
-    });
+  const img = document.createElement("img");
+  Object.assign(img.style, {
+    maxWidth: "90vw",
+    maxHeight: "90vh",
+    borderRadius: "10px",
+    boxShadow: "0 4px 25px rgba(0,0,0,0.4)",
+    transition: "transform 0.3s ease"
+  });
+  overlay.appendChild(img);
+  document.body.appendChild(overlay);
 
-    const img = document.createElement("img");
-    Object.assign(img.style, {
-      maxWidth: "90vw",
-      maxHeight: "90vh",
-      borderRadius: "10px",
-      boxShadow: "0 4px 25px rgba(0,0,0,0.4)",
-      transition: "transform 0.3s ease"
-    });
-    overlay.appendChild(img);
-    document.body.appendChild(overlay);
-
-    images.forEach(el => {
-      el.style.cursor = "zoom-in";
-      el.addEventListener("click", () => {
-        img.src = el.src;
-        overlay.style.display = "flex";
-        setTimeout(() => (img.style.transform = "scale(1)"), 10);
-      });
-    });
-
-    overlay.addEventListener("click", () => {
-      img.style.transform = "scale(0.95)";
-      setTimeout(() => (overlay.style.display = "none"), 200);
+  images.forEach(el => {
+    el.style.cursor = "zoom-in";
+    el.addEventListener("click", () => {
+      img.src = el.src;
+      overlay.style.display = "flex";
+      setTimeout(() => (img.style.transform = "scale(1)"), 10);
     });
   });
-  </script>
-</body>
+
+  overlay.addEventListener("click", () => {
+    img.style.transform = "scale(0.95)";
+    setTimeout(() => (overlay.style.display = "none"), 200);
+  });
+});
+</script>
+</body> 
 </html>
